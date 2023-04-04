@@ -1,59 +1,27 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import PaystackPop from '@paystack/inline-js';
+import PaystackPop from '@paystack/inline-js'
 
-onMounted(async () => {
+async function payWithPaystack() {
   const paystackPop = new PaystackPop()
 
-  await paystackPop.paymentRequest({
-    key: 'pk_domain_xxxxx',
-    email: 'CUSTOMER_EMAIL',
-    amount: 10000,
-    currency: 'NGN',
-    ref: 'YOUR_REFERENCE',
-    container: 'paystack-apple-pay',
-    loadPaystackCheckButton: 'paystack-other-channels',
-    style: {
-      theme: 'dark',
-      applePay: {
-        margin: '10px',
-        padding: '10px',
-        width: '100%',
-        borderRadius: '5px',
-        type: 'pay',
-        locale: 'en'
-      }
-    },
-    onSuccess(response: any) {
-      // do stuff
-      console.log(response)
-    },
-    onError() {
-      // do stuff
-    },
-    onCancel() {
-      // do stuff
-    },
-    onElementsMount(elements: any) {
-      console.log(elements)
-      // { applePay: true } or null
-    }
+  await paystackPop.checkout({
+    key: 'pk_live_9ad8c35d24534def2eaa1510152899a07de9e706',
+    email: 'test@gamil.com',
+    amount: 10000
   })
-})
+}
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
     </div>
   </header>
 
   <main>
-    <div id="paystack-apple-pay"></div>
-    <button id="paystack-other-channels">More payment options</button>
+    <button @click="payWithPaystack">Pay Me Money</button>
   </main>
 </template>
 
